@@ -46,10 +46,7 @@ class App:
         openImages = ImageTk.PhotoImage(openImages)
         openImagesButton = ttk.Button(toolbar, image=openImages, style='flat.TButton', command=self.open_images)
         openImagesButton.image = openImages
-
         Tooltip.CreateToolTip(openImagesButton, text='Open images')
-
-
         openImagesButton.grid(row=0, column=0)
 
         openVideo = Image.open(r'icons/open-video.png')
@@ -57,10 +54,24 @@ class App:
         openVideo = ImageTk.PhotoImage(openVideo)
         openVideoButton = ttk.Button(toolbar, image=openVideo, style='flat.TButton')
         openVideoButton.image = openVideo
-
         Tooltip.CreateToolTip(openVideoButton, text='Open video')
         openVideoButton.grid(row=0, column=1)
 
+        save_images = Image.open(r'icons/save_images.png')
+        save_images = save_images.resize((72, 72), Image.LANCZOS)
+        save_images = ImageTk.PhotoImage(save_images)
+        save_images_Button = ttk.Button(toolbar, image=save_images, style='flat.TButton')
+        save_images_Button.image = save_images
+        Tooltip.CreateToolTip(save_images_Button, text='Save images')
+        save_images_Button.grid(row=0, column=2)
+
+        save_generators = Image.open(r'icons/save_generators.png')
+        save_generators = save_generators.resize((72, 72), Image.LANCZOS)
+        save_generators = ImageTk.PhotoImage(save_generators)
+        save_generators_Button = ttk.Button(toolbar, image=save_generators, style='flat.TButton')
+        save_generators_Button.image = save_generators
+        Tooltip.CreateToolTip(save_generators_Button, text='Save generators')
+        save_generators_Button.grid(row=0, column=3)
         ###########
         # Options #
         ###########
@@ -230,7 +241,7 @@ class App:
         self._imgs = []
 
         for image_path in self.file_paths_images:
-            image_miniature = Image.open(r'icons/example.jpg')
+            image_miniature = Image.open(image_path)
             image_miniature = image_miniature.resize((76 * self.factor_multiplication, 48 * self.factor_multiplication),
                                                      Image.LANCZOS)
             image_miniature = ImageTk.PhotoImage(image_miniature)
