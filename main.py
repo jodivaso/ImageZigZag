@@ -186,7 +186,7 @@ class App:
         tab1 = ttk.Frame(self.content)
         tab2 = ttk.Frame(self.content)
 
-        self.tabControl.add(tab1, text='n = 1')
+        self.tabControl.add(tab1, text='n = 0')
         self.tabControl.add(tab2, text='n = 1')
         self.tabControl.grid(sticky="nsew", padx=10, pady=10)
 
