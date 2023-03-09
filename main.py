@@ -4,15 +4,12 @@ from PIL import ImageTk, Image, ImageDraw
 from TreeviewFrame import TreeviewFrame
 import os
 import Tooltip as Tooltip
-
+import BinaryImageZigzagHomology
+import cv2 as cv2
 
 class App:
 
     def __init__(self):
-
-
-
-
         # Tkinter GUI initialization and properties
         self.root = tkinter.Tk()
         self.root.minsize(width=100, height=100)
@@ -31,7 +28,7 @@ class App:
         # Parameters initialitation
         self.interval_length = tkinter.IntVar(value=1)
         self.generator_min_length = tkinter.IntVar(value=1)
-        self.generator_max_length = tkinter.IntVar(value=1)
+        self.generator_max_length = tkinter.IntVar(value=100)
         self.num_images = 10
 
         ###########
@@ -81,8 +78,8 @@ class App:
 
         dimensiones = ttk.Labelframe(options, text="Dimensions")
         dimensiones.grid(row=0, column=0, sticky="we", padx=10, pady=10)
-        self.checkbox_n0_value = tkinter.BooleanVar()
-        self.checkbox_n1_value = tkinter.BooleanVar()
+        self.checkbox_n0_value = tkinter.BooleanVar(value="True")
+        self.checkbox_n1_value = tkinter.BooleanVar(value="True")
         checkbox_n0 = ttk.Checkbutton(dimensiones, text="n = 0", variable=self.checkbox_n0_value)
         checkbox_n1 = ttk.Checkbutton(dimensiones, text="n = 1", variable=self.checkbox_n1_value)
         checkbox_n0.grid(row=0, column=0, padx=10, pady=10)
@@ -170,13 +167,13 @@ class App:
         toolbar_order = ttk.Frame(self.content)
         toolbar_order.grid(row=2, column=0, sticky="nwse", padx=10, pady=10)
 
-        move_up_Button = ttk.Button(toolbar_order, text="Move up", style='flat.TButton', command= self.move_up)
+        move_up_Button = ttk.Button(toolbar_order, text="Move up", style='flat.TButton', command = self.move_up)
         move_up_Button.grid(row=0, column=0, padx=10, pady=10)
 
-        move_down_Button = ttk.Button(toolbar_order, text="Move down", style='flat.TButton', command= self.move_down)
+        move_down_Button = ttk.Button(toolbar_order, text="Move down", style='flat.TButton', command = self.move_down)
         move_down_Button.grid(row=0, column=1, padx=10, pady=10)
 
-        delete_Button = ttk.Button(toolbar_order, text="Delete", style='flat.TButton', command= self.delete)
+        delete_Button = ttk.Button(toolbar_order, text="Delete", style='flat.TButton', command = self.delete)
         delete_Button.grid(row=0, column=2, padx=10, pady=10)
 
         ######################
@@ -187,32 +184,45 @@ class App:
 
     def run(self):
         self.info_string.set("Computing the zigzag persistence.\nPlease wait.")
+        # Empiezo a calcular.
+        dimensions = []
+        if self.checkbox_n0_value.get():
+            dimensions.append(0)
+        if self.checkbox_n1_value.get():
+            dimensions.append(1)
+
+        BinaryImageZigzagHomology.imageListZigzagPlotBar(imageList=self.images_opencv, dimensions=dimensions,
+                                                         interval_l=self.interval_length.get(), gen_l1=self.generator_min_length.get(),
+                                                         gen_l2=self.generator_max_length.get(), printGenerators=self.show_generators.get())
 
 
         self.info_string.set("Finished!\n\n\n\nSave the barcodes and/or the generators pressing\nthe corresponding buttons in the toolbar.")
         ## Create tab
         self.treeview_frame.grid_forget()
 
-        self.tabControl.grid(row=1, column=0)
-        tab1 = ttk.Frame(self.content)
-        tab2 = ttk.Frame(self.content)
 
-        self.tabControl.add(tab1, text='n = 0')
-        self.tabControl.add(tab2, text='n = 1')
-        self.tabControl.grid(sticky="nsew", padx=10, pady=10)
+        if 0 in dimensions:
+            print("ENTRO!")
+            tab0 = ttk.Frame(self.content)
+            self.tabControl.add(tab0, text='n = 0')
+            image0 = Image.open(".aux_zigzag0.jpg")
+            image0 = ImageTk.PhotoImage(image0)
 
-        ttk.Label(tab1,
-                  text="Welcome to \
-                  GeeksForGeeks").grid(column=0,
-                                       row=0,
-                                       padx=30,
-                                       pady=30)
-        ttk.Label(tab2,
-                  text="Lets dive into the\
-                  world of computers").grid(column=0,
-                                            row=0,
-                                            padx=30,
-                                            pady=30)
+            tab_label0 = ttk.Label(tab0, image=image0)
+            tab_label0.image = image0
+            tab_label0.grid(column=0, row=0, padx=30, pady=30)
+        if 1 in dimensions:
+            tab1 = ttk.Frame(self.content)
+            self.tabControl.add(tab1, text='n = 1')
+            image1 = Image.open(".aux_zigzag1.jpg")
+            image1 = ImageTk.PhotoImage(image1)
+
+            tab_label1 = ttk.Label(tab1, image=image1)
+            tab_label1.image = image1
+            tab_label1.grid(column=0, row=0, padx=30, pady=30)
+
+        self.tabControl.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+
 
 
     def move_up(self):
@@ -237,8 +247,9 @@ class App:
 
         self.tabControl.grid_forget() # Para que vuelva a aparecer, en caso de que hayamos pulsado Run antes.
 
-        self.file_paths_images = filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg *.jpeg *.png")])
+        self.file_paths_images = filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg *.jpeg *.png *.pbm")])
         self._imgs = []
+        self.images_opencv=[]
 
         for image_path in self.file_paths_images:
             image_miniature = Image.open(image_path)
@@ -250,27 +261,11 @@ class App:
 
             self.treeview_frame.treeview.insert('', 'end', image=image_miniature,
                                            value=(image_name, ))
+            image = cv2.imread(image_path, 0)
+            self.images_opencv.append(image) #TODO: Cuidado con reordenar luego.
 
 
 # https://www.youtube.com/watch?v=tvXFpMGlHPk
-
-
-        # results = ttk.Labelframe(self.content, text="Result")
-        # results.grid(row=1, column=0)
-        #
-        # image_result = Image.open('ur.jpg')
-        # image_result = ImageTk.PhotoImage(image_result)
-        # resultsLabel = ttk.Label(results, image=image_result, width=300)
-        # resultsLabel.image = image_result
-        # resultsLabel.grid()
-        #
-        #
-        #
-
-
-
-
-
 
 if __name__ == "__main__":
     App()
