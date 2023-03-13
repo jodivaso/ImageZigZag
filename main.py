@@ -190,6 +190,7 @@ class App:
         #    Aux variables   #
         ######################
         self.dimensions = []
+        self.images_opencv = []
 
         self.root.protocol('WM_DELETE_WINDOW', self.on_closing)
 
@@ -215,35 +216,41 @@ class App:
         if self.checkbox_n1_value.get():
             self.dimensions.append(1)
 
-        BinaryImageZigzagHomology.imageListZigzagPlotBar(imageList=self.images_opencv, dimensions=self.dimensions,
-                                                         interval_l=self.interval_length.get(), gen_l1=self.generator_min_length.get(),
-                                                         gen_l2=self.generator_max_length.get(), printGenerators=self.show_generators.get())
+        if not self.checkbox_n0_value.get() and not self.checkbox_n1_value.get():  # If n=0 or n=1 (nothing to compute)
+            self.info_string.set("Error: you must select at least one dimension")
+        elif not self.images_opencv: # If the list of images is empty
+            self.info_string.set("Error: no images (open images or a video)")
+        else: # Then, compute:
+
+            BinaryImageZigzagHomology.imageListZigzagPlotBar(imageList=self.images_opencv, dimensions=self.dimensions,
+                                                             interval_l=self.interval_length.get(), gen_l1=self.generator_min_length.get(),
+                                                             gen_l2=self.generator_max_length.get(), printGenerators=self.show_generators.get())
 
 
-        self.info_string.set("Finished!\n\n\n\nSave the barcodes and/or the generators pressing\nthe corresponding buttons in the toolbar.")
-        ## Create tab
-        self.treeview_frame.grid_forget()
+            self.info_string.set("Finished!\n\n\n\nSave the barcodes and/or the generators pressing\nthe corresponding buttons in the toolbar.")
+            ## Create tab
+            self.treeview_frame.grid_forget()
 
-        if 0 in self.dimensions:
-            self.tab0 = ttk.Frame(self.content)
-            self.tabControl.add(self.tab0, text='n = 0')
-            image0 = Image.open(".aux_zigzag0.jpg")
-            image0 = ImageTk.PhotoImage(image0)
+            if 0 in self.dimensions:
+                self.tab0 = ttk.Frame(self.content)
+                self.tabControl.add(self.tab0, text='n = 0')
+                image0 = Image.open(".aux_zigzag0.jpg")
+                image0 = ImageTk.PhotoImage(image0)
 
-            tab_label0 = ttk.Label(self.tab0, image=image0)
-            tab_label0.image = image0
-            tab_label0.grid(column=0, row=0, padx=30, pady=30)
-        if 1 in self.dimensions:
-            self.tab1 = ttk.Frame(self.content)
-            self.tabControl.add(self.tab1, text='n = 1')
-            image1 = Image.open(".aux_zigzag1.jpg")
-            image1 = ImageTk.PhotoImage(image1)
+                tab_label0 = ttk.Label(self.tab0, image=image0)
+                tab_label0.image = image0
+                tab_label0.grid(column=0, row=0, padx=30, pady=30)
+            if 1 in self.dimensions:
+                self.tab1 = ttk.Frame(self.content)
+                self.tabControl.add(self.tab1, text='n = 1')
+                image1 = Image.open(".aux_zigzag1.jpg")
+                image1 = ImageTk.PhotoImage(image1)
 
-            tab_label1 = ttk.Label(self.tab1, image=image1)
-            tab_label1.image = image1
-            tab_label1.grid(column=0, row=0, padx=30, pady=30)
+                tab_label1 = ttk.Label(self.tab1, image=image1)
+                tab_label1.image = image1
+                tab_label1.grid(column=0, row=0, padx=30, pady=30)
 
-        self.tabControl.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+            self.tabControl.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
     def update_list_images(self):
         new_images_opencv = []
@@ -328,8 +335,6 @@ def index_containing_substring(the_list, substring):
               return i
     return -1
 
-
-# https://www.youtube.com/watch?v=tvXFpMGlHPk
 
 if __name__ == "__main__":
     App()
