@@ -221,7 +221,7 @@ class App:
         elif not self.images_opencv: # If the list of images is empty
             self.info_string.set("Error: no images (open images or a video)")
         else: # Then, compute:
-
+            self.info_string.set("Computing. Please wait.")
             BinaryImageZigzagHomology.imageListZigzagPlotBar(imageList=self.images_opencv, dimensions=self.dimensions,
                                                              interval_l=self.interval_length.get(), gen_l1=self.generator_min_length.get(),
                                                              gen_l2=self.generator_max_length.get(), printGenerators=self.show_generators.get())
