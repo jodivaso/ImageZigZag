@@ -230,6 +230,8 @@ class App:
             self.info_string.set("Finished!\n\n\n\nSave the barcodes and/or the generators pressing\nthe corresponding buttons in the toolbar.")
             ## Create tab
             self.treeview_frame.grid_forget()
+            self.forget_existing_tabs() # Forget existing tabs
+
 
             if 0 in self.dimensions:
                 self.tab0 = ttk.Frame(self.content)
@@ -289,6 +291,15 @@ class App:
             self.treeview_frame.treeview.delete(row)
         self.update_list_images()
 
+    def forget_existing_tabs(self):
+        # We forget the previous existing tabs:
+        if self.tab0 is not None:
+            self.tabControl.forget(self.tab0)
+            self.tab0 = None
+        if self.tab1 is not None:
+            self.tabControl.forget(self.tab1)
+            self.tab1 = None
+
     def open_images(self):
         # Delete all (in case it was not empty)
         for i in self.treeview_frame.treeview.get_children():
@@ -296,12 +307,7 @@ class App:
 
         self.tabControl.grid_forget() # Para que vuelva a aparecer las miniaturas, en caso de que hayamos pulsado Run antes.
         # Nos cargamos también las tabs existentes.
-        if self.tab0 is not None:
-            self.tabControl.forget(self.tab0)
-            self.tab0 = None
-        if self.tab1 is not None:
-            self.tabControl.forget(self.tab1)
-            self.tab1 = None
+        self.forget_existing_tabs()
 
 
         self.file_paths_images = list(filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg *.jpeg *.png *.pbm")]))
