@@ -181,6 +181,8 @@ class App:
         ######################
 
         self.tabControl = ttk.Notebook(self.content)
+        self.tab0 = None
+        self.tab1 = None
 
     def run(self):
         self.info_string.set("Computing the zigzag persistence.\nPlease wait.")
@@ -200,69 +202,101 @@ class App:
         ## Create tab
         self.treeview_frame.grid_forget()
 
-
         if 0 in dimensions:
-            print("ENTRO!")
-            tab0 = ttk.Frame(self.content)
-            self.tabControl.add(tab0, text='n = 0')
+            self.tab0 = ttk.Frame(self.content)
+            self.tabControl.add(self.tab0, text='n = 0')
             image0 = Image.open(".aux_zigzag0.jpg")
             image0 = ImageTk.PhotoImage(image0)
 
-            tab_label0 = ttk.Label(tab0, image=image0)
+            tab_label0 = ttk.Label(self.tab0, image=image0)
             tab_label0.image = image0
             tab_label0.grid(column=0, row=0, padx=30, pady=30)
         if 1 in dimensions:
-            tab1 = ttk.Frame(self.content)
-            self.tabControl.add(tab1, text='n = 1')
+            self.tab1 = ttk.Frame(self.content)
+            self.tabControl.add(self.tab1, text='n = 1')
             image1 = Image.open(".aux_zigzag1.jpg")
             image1 = ImageTk.PhotoImage(image1)
 
-            tab_label1 = ttk.Label(tab1, image=image1)
+            tab_label1 = ttk.Label(self.tab1, image=image1)
             tab_label1.image = image1
             tab_label1.grid(column=0, row=0, padx=30, pady=30)
 
         self.tabControl.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
 
+    def update_list_images(self):
+        new_images_opencv = []
+        new_file_path = []
 
+        # We iterate the current tree. We must update the self.images_opencv list in order to have the images in
+        # the same order as the tree.
+        for child in self.treeview_frame.treeview.get_children():
+            image_name = self.treeview_frame.treeview.item(child)["values"][0]
+            index_image = index_containing_substring(self.file_paths_images, image_name)
+            new_images_opencv.append(self.images_opencv[index_image]) # Add to the new position the image
+            new_file_path.append(self.file_paths_images[index_image])
+
+        self.file_paths_images = new_file_path
+        self.images_opencv = new_images_opencv
+
+        # To print the current order
+        # for child in self.treeview_frame.treeview.get_children():
+        #     print(self.treeview_frame.treeview.item(child)["values"])[0]
 
     def move_up(self):
         rows = self.treeview_frame.treeview.selection()
         for row in rows:
             self.treeview_frame.treeview.move(row, self.treeview_frame.treeview.parent(row), self.treeview_frame.treeview.index(row)-1)
+        self.update_list_images()
 
     def move_down(self):
         rows = self.treeview_frame.treeview.selection()
         for row in reversed(rows):
             self.treeview_frame.treeview.move(row, self.treeview_frame.treeview.parent(row), self.treeview_frame.treeview.index(row)+1)
+        self.update_list_images()
 
     def delete(self):
         rows = self.treeview_frame.treeview.selection()
         for row in rows:
             self.treeview_frame.treeview.delete(row)
+        self.update_list_images()
 
     def open_images(self):
-        # Borramos todo (por si acaso había cosas de antes)
+        # Delete all (in case it was not empty)
         for i in self.treeview_frame.treeview.get_children():
             self.treeview_frame.treeview.delete(i)
 
-        self.tabControl.grid_forget() # Para que vuelva a aparecer, en caso de que hayamos pulsado Run antes.
+        self.tabControl.grid_forget() # Para que vuelva a aparecer las miniaturas, en caso de que hayamos pulsado Run antes.
+        # Nos cargamos también las tabs existentes.
+        if self.tab0 is not None:
+            self.tabControl.forget(self.tab0)
+            self.tab0 = None
+        if self.tab1 is not None:
+            self.tabControl.forget(self.tab1)
+            self.tab1 = None
 
-        self.file_paths_images = filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg *.jpeg *.png *.pbm")])
-        self._imgs = []
-        self.images_opencv=[]
+
+        self.file_paths_images = list(filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg *.jpeg *.png *.pbm")]))
+        self.images_miniature = []
+        self.images_opencv = []
 
         for image_path in self.file_paths_images:
             image_miniature = Image.open(image_path)
             image_miniature = image_miniature.resize((76 * self.factor_multiplication, 48 * self.factor_multiplication),
                                                      Image.LANCZOS)
             image_miniature = ImageTk.PhotoImage(image_miniature)
-            self._imgs.append(image_miniature)
+            self.images_miniature.append(image_miniature)
             image_name = os.path.basename(image_path)
 
             self.treeview_frame.treeview.insert('', 'end', image=image_miniature,
                                            value=(image_name, ))
             image = cv2.imread(image_path, 0)
-            self.images_opencv.append(image) #TODO: Cuidado con reordenar luego.
+            self.images_opencv.append(image)
+
+def index_containing_substring(the_list, substring):
+    for i, s in enumerate(the_list):
+        if substring in s:
+              return i
+    return -1
 
 
 # https://www.youtube.com/watch?v=tvXFpMGlHPk
