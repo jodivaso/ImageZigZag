@@ -6,6 +6,7 @@ import os
 import Tooltip as Tooltip
 import BinaryImageZigzagHomology
 import cv2 as cv2
+import shutil
 
 class App:
 
@@ -57,7 +58,7 @@ class App:
         save_images = Image.open(r'icons/save_images.png')
         save_images = save_images.resize((72, 72), Image.LANCZOS)
         save_images = ImageTk.PhotoImage(save_images)
-        save_images_Button = ttk.Button(toolbar, image=save_images, style='flat.TButton')
+        save_images_Button = ttk.Button(toolbar, image=save_images, style='flat.TButton', command=self.save_images)
         save_images_Button.image = save_images
         Tooltip.CreateToolTip(save_images_Button, text='Save images')
         save_images_Button.grid(row=0, column=2)
@@ -69,6 +70,7 @@ class App:
         save_generators_Button.image = save_generators
         Tooltip.CreateToolTip(save_generators_Button, text='Save generators')
         save_generators_Button.grid(row=0, column=3)
+
         ###########
         # Options #
         ###########
@@ -184,16 +186,36 @@ class App:
         self.tab0 = None
         self.tab1 = None
 
+        ######################
+        #    Aux variables   #
+        ######################
+        self.dimensions = []
+
+        self.root.protocol('WM_DELETE_WINDOW', self.on_closing)
+
+
+    # On closing: delete the temporal files
+    def on_closing(self):
+        try:
+            os.remove('.aux_zigzag0.jpg')
+        except OSError:
+            pass
+        try:
+            os.remove('.aux_zigzag1.jpg')
+        except OSError:
+            pass
+        self.root.destroy()
+
     def run(self):
         self.info_string.set("Computing the zigzag persistence.\nPlease wait.")
         # Empiezo a calcular.
-        dimensions = []
+        self.dimensions = []
         if self.checkbox_n0_value.get():
-            dimensions.append(0)
+            self.dimensions.append(0)
         if self.checkbox_n1_value.get():
-            dimensions.append(1)
+            self.dimensions.append(1)
 
-        BinaryImageZigzagHomology.imageListZigzagPlotBar(imageList=self.images_opencv, dimensions=dimensions,
+        BinaryImageZigzagHomology.imageListZigzagPlotBar(imageList=self.images_opencv, dimensions=self.dimensions,
                                                          interval_l=self.interval_length.get(), gen_l1=self.generator_min_length.get(),
                                                          gen_l2=self.generator_max_length.get(), printGenerators=self.show_generators.get())
 
@@ -202,7 +224,7 @@ class App:
         ## Create tab
         self.treeview_frame.grid_forget()
 
-        if 0 in dimensions:
+        if 0 in self.dimensions:
             self.tab0 = ttk.Frame(self.content)
             self.tabControl.add(self.tab0, text='n = 0')
             image0 = Image.open(".aux_zigzag0.jpg")
@@ -211,7 +233,7 @@ class App:
             tab_label0 = ttk.Label(self.tab0, image=image0)
             tab_label0.image = image0
             tab_label0.grid(column=0, row=0, padx=30, pady=30)
-        if 1 in dimensions:
+        if 1 in self.dimensions:
             self.tab1 = ttk.Frame(self.content)
             self.tabControl.add(self.tab1, text='n = 1')
             image1 = Image.open(".aux_zigzag1.jpg")
@@ -291,6 +313,14 @@ class App:
                                            value=(image_name, ))
             image = cv2.imread(image_path, 0)
             self.images_opencv.append(image)
+
+    def save_images(self):
+        for i in self.dimensions:
+            title = "Name for image in dimension " + str(i)
+            name = '.aux_zigzag'+str(i)+'.jpg'
+            file_name = filedialog.asksaveasfilename(defaultextension=".jpg", title=title, filetypes=[("JPG file", "*.jpg")])
+            shutil.copy(name, file_name)
+
 
 def index_containing_substring(the_list, substring):
     for i, s in enumerate(the_list):
