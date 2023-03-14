@@ -66,7 +66,8 @@ class App:
         save_generators = Image.open(r'icons/save_generators.png')
         save_generators = save_generators.resize((72, 72), Image.LANCZOS)
         save_generators = ImageTk.PhotoImage(save_generators)
-        save_generators_Button = ttk.Button(toolbar, image=save_generators, style='flat.TButton')
+        save_generators_Button = ttk.Button(toolbar, image=save_generators, style='flat.TButton',
+                                            command=self.save_generators)
         save_generators_Button.image = save_generators
         Tooltip.CreateToolTip(save_generators_Button, text='Save generators')
         save_generators_Button.grid(row=0, column=3)

@@ -193,16 +193,16 @@ def plot_zigzag_bars(dgm, dimension, times, generator_list, interval_l=1, gen_l1
                 if p.death == float('inf'):
                     ax.plot([p.birth, maxi+1], [i,i], **bar_kwargs)
                     plt.scatter([p.birth], [i], color="blue", edgecolor="blue")
+                    result_generators.append(printGenerator(generator_list[p.data]))
                     if printGenerators: 
                         plt.text(p.birth, i+0.2, printGenerator(generator_list[p.data]))
-                        result_generators.append(printGenerator(generator_list[p.data]))
                 else:
                     ax.plot([p.birth, p.death-0.05], [i,i], **bar_kwargs)
                     plt.scatter([p.birth], [i], color="blue", edgecolor="blue")
                     plt.scatter([p.death], [i], color="white", edgecolor="blue")
+                    result_generators.append(printGenerator(generator_list[p.data]))
                     if printGenerators:
                         plt.text(p.birth, i+0.2, printGenerator(generator_list[p.data]))
-                        result_generators.append(printGenerator(generator_list[p.data]))
 
     plt.savefig(".aux_zigzag"+str(dimension)+".jpg")
     with open('.aux_zigzag'+str(dimension)+'.txt', 'w') as f:
