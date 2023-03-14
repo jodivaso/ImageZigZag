@@ -50,7 +50,7 @@ class App:
         openVideo = Image.open(r'icons/open-video.png')
         openVideo = openVideo.resize((72, 72), Image.LANCZOS)
         openVideo = ImageTk.PhotoImage(openVideo)
-        openVideoButton = ttk.Button(toolbar, image=openVideo, style='flat.TButton')
+        openVideoButton = ttk.Button(toolbar, image=openVideo, style='flat.TButton', command=self.open_videos)
         openVideoButton.image = openVideo
         Tooltip.CreateToolTip(openVideoButton, text='Open video')
         openVideoButton.grid(row=0, column=1)
@@ -298,14 +298,8 @@ class App:
             self.tab1 = None
 
     def open_images(self):
-        # Delete all (in case it was not empty)
-        for i in self.treeview_frame.treeview.get_children():
-            self.treeview_frame.treeview.delete(i)
-
-        self.tabControl.grid_forget() # Para que vuelva a aparecer las miniaturas, en caso de que hayamos pulsado Run antes.
-        # Nos cargamos también las tabs existentes.
-        self.forget_existing_tabs()
-
+        # Borramos lo que hubiese en el Treeview y en tabs, por si acaso había algo de antes.
+        self.delete_and_forget_tree_tabs()
 
         self.file_paths_images = list(filedialog.askopenfilenames(filetypes=[("Image files", "*.jpg *.jpeg *.png *.pbm")]))
         self.images_miniature = []
@@ -323,6 +317,33 @@ class App:
                                            value=(image_name, ))
             image = cv2.imread(image_path, 0)
             self.images_opencv.append(image)
+
+    def open_videos(self):
+        # Borramos lo que hubiese en el Treeview y en tabs, por si acaso había algo de antes.
+        self.delete_and_forget_tree_tabs()
+
+        self.file_path_video = filedialog.askopenfilename(filetypes=[("Video files", "*.avi")])
+        self.file_paths_images = []
+        self.images_miniature = []
+        self.images_opencv = []
+        video_name = os.path.basename(self.file_path_video)
+        vidcap = cv2.VideoCapture(self.file_path_video)
+        success, image = vidcap.read()
+        i = 0
+        while success:
+            image_miniature = Image.fromarray(image)
+            image_miniature = image_miniature.resize((76 * self.factor_multiplication, 48 * self.factor_multiplication),
+                                                     Image.LANCZOS)
+            image_miniature = ImageTk.PhotoImage(image_miniature)
+            self.images_miniature.append(image_miniature)
+            image_name = os.path.basename(self.file_path_video)[-4] + "_frame"+str(i)+".avi"
+            self.treeview_frame.treeview.insert('', 'end', image=image_miniature,
+                                           value=(image_name, ))
+            self.images_opencv.append(image)
+            success, image = vidcap.read()
+            i = i + 1
+
+
 
     def save_images(self):
         if not self.dimensions:
@@ -344,12 +365,21 @@ class App:
                 file_name = filedialog.asksaveasfilename(defaultextension=".txt", title=title, filetypes=[("Text file", "*.txt")])
                 shutil.copy(name, file_name)
 
+    def delete_and_forget_tree_tabs(self):
+        # Delete all (in case it was not empty)
+        for i in self.treeview_frame.treeview.get_children():
+            self.treeview_frame.treeview.delete(i)
+        self.tabControl.grid_forget() # Para que vuelva a aparecer las miniaturas, en caso de que hayamos pulsado Run antes.
+        # Nos cargamos también las tabs existentes.
+        self.forget_existing_tabs()
+
 
 def index_containing_substring(the_list, substring):
     for i, s in enumerate(the_list):
         if substring in s:
               return i
     return -1
+
 
 def remove_file(file_name):
     try:
