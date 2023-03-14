@@ -170,14 +170,14 @@ class App:
         toolbar_order = ttk.Frame(self.content)
         toolbar_order.grid(row=2, column=0, sticky="nwse", padx=10, pady=10)
 
-        move_up_Button = ttk.Button(toolbar_order, text="Move up", style='flat.TButton', command = self.move_up)
-        move_up_Button.grid(row=0, column=0, padx=10, pady=10)
+        self.move_up_Button = ttk.Button(toolbar_order, text="Move up", style='flat.TButton', command = self.move_up)
+        self.move_up_Button.grid(row=0, column=0, padx=10, pady=10)
 
-        move_down_Button = ttk.Button(toolbar_order, text="Move down", style='flat.TButton', command = self.move_down)
-        move_down_Button.grid(row=0, column=1, padx=10, pady=10)
+        self.move_down_Button = ttk.Button(toolbar_order, text="Move down", style='flat.TButton', command = self.move_down)
+        self.move_down_Button.grid(row=0, column=1, padx=10, pady=10)
 
-        delete_Button = ttk.Button(toolbar_order, text="Delete", style='flat.TButton', command = self.delete)
-        delete_Button.grid(row=0, column=2, padx=10, pady=10)
+        self.delete_Button = ttk.Button(toolbar_order, text="Delete", style='flat.TButton', command = self.delete)
+        self.delete_Button.grid(row=0, column=2, padx=10, pady=10)
 
         ######################
         #     Tab Control    #
@@ -298,6 +298,9 @@ class App:
             self.tab1 = None
 
     def open_images(self):
+        self.move_up_Button.grid()
+        self.move_down_Button.grid()
+        self.delete_Button.grid()
         # Borramos lo que hubiese en el Treeview y en tabs, por si acaso había algo de antes.
         self.delete_and_forget_tree_tabs()
 
@@ -319,6 +322,9 @@ class App:
             self.images_opencv.append(image)
 
     def open_videos(self):
+        self.move_up_Button.grid_remove()
+        self.move_down_Button.grid_remove()
+        self.delete_Button.grid_remove()
         # Borramos lo que hubiese en el Treeview y en tabs, por si acaso había algo de antes.
         self.delete_and_forget_tree_tabs()
 
