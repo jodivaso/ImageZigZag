@@ -183,7 +183,8 @@ def plot_zigzag_bars(dgm, dimension, times, generator_list, interval_l=1, gen_l1
     ax.set_ylim(-1, len(dgm))
 
     plt.text(0, len(dgm)-0.2, "Barcode of dimension "+str(dimension))
-    
+    result_generators = []
+
     for i, p in generator:
 
         if p.death - p.birth >= interval_l:
@@ -191,17 +192,24 @@ def plot_zigzag_bars(dgm, dimension, times, generator_list, interval_l=1, gen_l1
             if (gen_l1 <= len(g)) and  (gen_l2 == 0 or len(g) <= gen_l2):
                 if p.death == float('inf'):
                     ax.plot([p.birth, maxi+1], [i,i], **bar_kwargs)
-                    plt.scatter([p.birth],[i], color="blue", edgecolor="blue")
+                    plt.scatter([p.birth], [i], color="blue", edgecolor="blue")
                     if printGenerators: 
-                        plt.text(p.birth,i+0.2,printGenerator(generator_list[p.data]))
+                        plt.text(p.birth, i+0.2, printGenerator(generator_list[p.data]))
+                        result_generators.append(printGenerator(generator_list[p.data]))
                 else:
                     ax.plot([p.birth, p.death-0.05], [i,i], **bar_kwargs)
-                    plt.scatter([p.birth],[i], color="blue", edgecolor="blue")
-                    plt.scatter([p.death],[i], color="white", edgecolor="blue")
+                    plt.scatter([p.birth], [i], color="blue", edgecolor="blue")
+                    plt.scatter([p.death], [i], color="white", edgecolor="blue")
                     if printGenerators:
-                        plt.text(p.birth,i+0.2,printGenerator(generator_list[p.data]))
+                        plt.text(p.birth, i+0.2, printGenerator(generator_list[p.data]))
+                        result_generators.append(printGenerator(generator_list[p.data]))
 
     plt.savefig(".aux_zigzag"+str(dimension)+".jpg")
+    with open('.aux_zigzag'+str(dimension)+'.txt', 'w') as f:
+        for line in result_generators:
+            f.write(f"{line}\n")
+    f.close()
+
     # if show:
     #     plt.show()
 

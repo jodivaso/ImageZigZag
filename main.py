@@ -197,14 +197,10 @@ class App:
 
     # On closing: delete the temporal files
     def on_closing(self):
-        try:
-            os.remove('.aux_zigzag0.jpg')
-        except OSError:
-            pass
-        try:
-            os.remove('.aux_zigzag1.jpg')
-        except OSError:
-            pass
+        remove_file('.aux_zigzag0.jpg')
+        remove_file('.aux_zigzag1.jpg')
+        remove_file('.aux_zigzag0.txt')
+        remove_file('.aux_zigzag1.txt')
         self.root.destroy()
 
     def run(self):
@@ -328,11 +324,24 @@ class App:
             self.images_opencv.append(image)
 
     def save_images(self):
-        for i in self.dimensions:
-            title = "Name for image in dimension " + str(i)
-            name = '.aux_zigzag'+str(i)+'.jpg'
-            file_name = filedialog.asksaveasfilename(defaultextension=".jpg", title=title, filetypes=[("JPG file", "*.jpg")])
-            shutil.copy(name, file_name)
+        if not self.dimensions:
+            self.info_string.set("Error: no dimensions selected or zigzag persistence not computed")
+        else:
+            for i in self.dimensions:
+                title = "Name for image in dimension " + str(i)
+                name = '.aux_zigzag'+str(i)+'.jpg'
+                file_name = filedialog.asksaveasfilename(defaultextension=".jpg", title=title, filetypes=[("JPG file", "*.jpg")])
+                shutil.copy(name, file_name)
+
+    def save_generators(self):
+        if not self.dimensions:
+            self.info_string.set("Error: no dimensions selected or zigzag persistence not computed")
+        else:
+            for i in self.dimensions:
+                title = "Name for text file for generators in dimension " + str(i)
+                name = '.aux_zigzag'+str(i)+'.txt'
+                file_name = filedialog.asksaveasfilename(defaultextension=".txt", title=title, filetypes=[("Text file", "*.txt")])
+                shutil.copy(name, file_name)
 
 
 def index_containing_substring(the_list, substring):
@@ -340,6 +349,12 @@ def index_containing_substring(the_list, substring):
         if substring in s:
               return i
     return -1
+
+def remove_file(file_name):
+    try:
+        os.remove(file_name)
+    except OSError:
+        pass
 
 
 if __name__ == "__main__":
