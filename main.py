@@ -7,6 +7,7 @@ import Tooltip as Tooltip
 import BinaryImageZigzagHomology
 import cv2 as cv2
 import shutil
+import time
 
 class App:
 
@@ -205,6 +206,7 @@ class App:
         self.root.destroy()
 
     def run(self):
+        init_time = time.time()
         self.info_string.set("Computing the zigzag persistence.\nPlease wait.")
         # Empiezo a calcular.
         self.dimensions = []
@@ -250,7 +252,8 @@ class App:
                 tab_label1.grid(column=0, row=0, padx=30, pady=30)
 
             self.tabControl.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
-
+        final_time = time.time() - init_time
+        print("Elapsed time:", final_time)
     def update_list_images(self):
         new_images_opencv = []
         new_file_path = []
