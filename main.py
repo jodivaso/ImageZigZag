@@ -30,7 +30,7 @@ class App:
         # Parameters initialitation
         self.interval_length = tkinter.IntVar(value=1)
         self.generator_min_length = tkinter.IntVar(value=1)
-        self.generator_max_length = tkinter.IntVar(value=100)
+        self.generator_max_length = tkinter.IntVar(value=0)
         self.num_images = 10
 
         ###########
@@ -106,7 +106,7 @@ class App:
         generator_min_lenth_SpinBox.grid(row=1, column=1, sticky="e", padx=10, pady=10)
 
         generator_max_lenth_Label = ttk.Label(parameters, text="Generators max length")
-        generator_max_lenth_SpinBox = ttk.Spinbox(parameters, from_=1, increment=1, to=9999999,
+        generator_max_lenth_SpinBox = ttk.Spinbox(parameters, from_=0, increment=1, to=9999999,
                                       textvariable=self.generator_max_length)
 
         generator_max_lenth_Label.grid(row=2, column=0, sticky="w", padx=10, pady=10)
@@ -254,6 +254,7 @@ class App:
             self.tabControl.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
         final_time = time.time() - init_time
         print("Elapsed time:", final_time)
+
     def update_list_images(self):
         new_images_opencv = []
         new_file_path = []
