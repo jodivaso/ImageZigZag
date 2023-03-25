@@ -148,8 +148,9 @@ def imageListZigzagHomology (imageList):
 def printGenerator (glist):
     return (' + '.join("%d * %s" % (pair[0], [v for v in pair[1]]) for pair in glist))
 
+
 def plot_zigzag_bars(dgm, dimension, times, generator_list, interval_l=1, gen_l1=1, gen_l2=0, printGenerators=True,
-                     order='birth', ax = None, **bar_style):
+                     order='birth', ax=None, **bar_style):
     """
     Plot the barcode.
     Arguments:
@@ -163,13 +164,11 @@ def plot_zigzag_bars(dgm, dimension, times, generator_list, interval_l=1, gen_l1
                      (Defaults: color='b')
     """
 
-    
-
     bar_kwargs = {'color': 'b'}
     bar_kwargs.update(bar_style)
 
     if order == 'death':
-        generator = enumerate(sorted(dgm, key = lambda p: p.death))
+        generator = enumerate(sorted(dgm, key=lambda p: p.death))
     else:
         generator = enumerate(dgm)
 
@@ -177,35 +176,41 @@ def plot_zigzag_bars(dgm, dimension, times, generator_list, interval_l=1, gen_l1
         ax = plt.axes()
 
     maxi = max(times, key=max)
-    maxi = maxi[len(maxi)-1]
-    
-    ax.set_xlim(-0.5,maxi+1.5)
-    ax.set_ylim(-1, len(dgm))
+    maxi = maxi[len(maxi) - 1]
 
-    plt.text(0, len(dgm)-0.2, "Barcode of dimension "+str(dimension))
+    ax.set_xlim(-0.5, maxi + 1.5)
+
     result_generators = []
 
-    for i, p in generator:
-
-        if p.death - p.birth >= interval_l:
+    i = 0
+    for j, p in generator:
+        if p.death == float('inf'):
+            de = maxi + 1
+        else:
+            de = p.death
+        if de - p.birth >= interval_l:
             g = generator_list[p.data]
-            if (gen_l1 <= len(g)) and  (gen_l2 == 0 or len(g) <= gen_l2):
+            if (gen_l1 <= len(g)) and (gen_l2 == 0 or len(g) <= gen_l2):
                 if p.death == float('inf'):
-                    ax.plot([p.birth, maxi+1], [i,i], **bar_kwargs)
+                    ax.plot([p.birth, maxi + 1], [i, i], **bar_kwargs)
                     plt.scatter([p.birth], [i], color="blue", edgecolor="blue")
                     result_generators.append(printGenerator(generator_list[p.data]))
-                    if printGenerators: 
-                        plt.text(p.birth, i+0.2, printGenerator(generator_list[p.data]))
+                    if printGenerators:
+                        plt.text(p.birth, i + 0.2, printGenerator(generator_list[p.data]))
                 else:
-                    ax.plot([p.birth, p.death-0.05], [i,i], **bar_kwargs)
+                    ax.plot([p.birth, p.death - 0.05], [i, i], **bar_kwargs)
                     plt.scatter([p.birth], [i], color="blue", edgecolor="blue")
                     plt.scatter([p.death], [i], color="white", edgecolor="blue")
                     result_generators.append(printGenerator(generator_list[p.data]))
                     if printGenerators:
-                        plt.text(p.birth, i+0.2, printGenerator(generator_list[p.data]))
+                        plt.text(p.birth, i + 0.2, printGenerator(generator_list[p.data]))
+                i = i + 1
 
-    plt.savefig(".aux_zigzag"+str(dimension)+".jpg")
-    with open('.aux_zigzag'+str(dimension)+'.txt', 'w') as f:
+    plt.text(0, i - 0.2, "Barcode of dimension " + str(dimension))
+    ax.set_ylim(-1, i)
+
+    plt.savefig(".aux_zigzag" + str(dimension) + ".jpg")
+    with open('.aux_zigzag' + str(dimension) + '.txt', 'w') as f:
         for line in result_generators:
             f.write(f"{line}\n")
     f.close()
