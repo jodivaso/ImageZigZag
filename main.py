@@ -353,8 +353,6 @@ class App:
             success, image = vidcap.read()
             i = i + 1
 
-
-
     def save_images(self):
         if not self.dimensions:
             self.info_string.set("Error: no dimensions selected or zigzag persistence not computed")
