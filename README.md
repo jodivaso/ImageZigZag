@@ -1,11 +1,19 @@
 # Readme
 
+This open-source code allows one to compute zigzag persistence from a sequence of images (or a white and black video). The program outputs the corresponding barcodes for dimensions 0 and 1. This repository contains a Jupyter notebook and also a GUI.
+
+## Requirements
+
+The sofware needs the packages ```opencv```, ```dionysus```, ```numpy```, ```Pillow``` and ```matplotlib```.
+
+The program has been tested on Linux (Ubuntu 22.04). Note that is difficult to build/install Dionysus on Windows.
+
 
 ## Installation and Execution from sources
 
-Python (version 3.8 or higher) and ```pip``` must be installed previously.
+Python and ```pip``` must be installed previously.
 
-The following commands clone the repository, install the requirements and execute the program.
+The following commands clone the repository, install the requirements and execute the GUI.
 
 ```
 git clone https://github.com/jodivaso/ImageZigZagPersistence.git
