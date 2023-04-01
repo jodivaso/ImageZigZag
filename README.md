@@ -27,9 +27,9 @@ python3 main.py
 The following images are part of the repository (examples folder):
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/examples/3circles-3.jpg" width="150">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/examples/3circles-2.jpg" width="150">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/examples/3circles-1.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/3circles-3.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/3circles-2.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/3circles-1.jpg" width="150">
 </p>
 
 
@@ -43,7 +43,7 @@ image. We can obtain this information by computing the zigzag
 barcode:
 
 <p>
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/examples/3circles-barcode.png">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/3circles-barcode.png">
 
 </p>
 
@@ -51,7 +51,7 @@ barcode:
 
 The following image is a processed frame of one of the sample videos provided by the CASABee software:
 
-![](https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/examples/frame_video_CASABee.jpg)
+![](https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/frame_video_CASABee.jpg)
 
 We can compute the zigzag barcode of the video, to track the 1-dimensional holes. All circles (which correspond to motile spermatozoa) 
 are detected (except for the ones in the borders, since they are not complete circles). The following (default) parameters are used:
