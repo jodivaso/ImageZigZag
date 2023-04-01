@@ -22,6 +22,17 @@ pip install -r requirements.txt
 python3 main.py
 ```
 
+The following commands install everything in a fresh conda environment and execute the GUI.
+
+```
+conda create -n ZigZag python=3.10 pip
+conda activate ZigZag
+git clone https://github.com/jodivaso/ImageZigZagPersistence.git
+cd ImageZigZagPersistence
+pip install -r requirements.txt
+python3 main.py
+```
+
 ## Example
 
 The following images are part of the repository (examples folder):
