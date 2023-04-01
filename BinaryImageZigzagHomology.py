@@ -210,6 +210,7 @@ def plot_zigzag_bars(dgm, dimension, times, generator_list, interval_l=1, gen_l1
     ax.set_ylim(-1, i)
 
     plt.savefig(".aux_zigzag" + str(dimension) + ".jpg")
+    plt.close()
     with open('.aux_zigzag' + str(dimension) + '.txt', 'w') as f:
         for line in result_generators:
             f.write(f"{line}\n")
