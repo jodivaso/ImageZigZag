@@ -61,4 +61,4 @@ are detected (except for the ones in the borders, since they are not complete ci
 
 Note that 1-dimensional homology is necessary (the number of connected components is not the same as the number of holes).
 
-![](https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/examples/result_video_CASABee.jpg)
+![](https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/result_video_CASABee.jpg)
