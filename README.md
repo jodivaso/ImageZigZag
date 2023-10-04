@@ -98,7 +98,7 @@ The folder ```Experiments``` includes:
 
 A classical object tracking method (a baseline approach) usually consists of three steps:
 
-1. Object detection, for example using the findContours method (from OpenCV) or
+1. Object detection, for example using the ```findContours``` method (from OpenCV) or
 the Hough transform (for the specific case of circle detection).
 
 3. Centroid tracking, i.e. computation the centroid of each object and centroid matching
@@ -125,7 +125,7 @@ transform permit detecting and tracking the circles (holes) correctly. Note that
 change their shape slightly from one frame to the next.
 
 However, in the following sequence of two binary digital images Hough transform will not work since
-the objects do not have a circular shape. Both the findContours method (combined with
+the objects do not have a circular shape. Both the ```findContours``` method (combined with
 tracking based on distances) and the zigzag will work.
 
 <p align="center">
@@ -136,7 +136,7 @@ tracking based on distances) and the zigzag will work.
 
 It is also worth noting that the shape of the objects (not just their positions) can usually
 vary slightly over the different frames. The zigzag method can deal with these situations.
-The baseline approach would use, as already mentioned, the findContours method and a
+The baseline approach would use, as already mentioned, the ```findContours``` method and a
 tracking based on distances with a filtering based on object area, but if the filtering is not
 done (or it is performed but not properly) and/or the objects change more than expected,
 then zigzag will detect them as different objects (as desired), but the classical method could
@@ -150,9 +150,9 @@ match them incorrectly.
 
 In the previous sequence binary digital images the circles change their shape
 in each frame. Hough transform will not work properly since one of the objects does not
-have a circular shape in frame 2. The findContours method (combined with tracking based
+have a circular shape in frame 2. The ```findContours``` method (combined with tracking based
 on distance with no filtering) will not work, since one of the circles is transformed into a
-square, but the findContours method would detect it as the same contour since it is the
+square, but the ```findContours``` method would detect it as the same contour since it is the
 closest one with a similar area (i.e., the left circle appearing in the first frame is related to
 the square in the second frame). The zigzag method will detect 3 holes correctly, one living
 during three frames.
