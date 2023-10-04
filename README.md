@@ -115,7 +115,10 @@ not important for some of our examples, where Hough transform with tracking base
 distances is enough, but for other types of videos (for example, those of objects with different
 shapes in the repository) the Hough transform does not fit. See, for example, the following figure:
 
-INCLUIR FIGURA
+<p align="center">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example2/example_response1.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example2/example_response2.jpg" width="150">
+</p>
 
 This figure is a sequence of two binary digital images. Both the zigzag method and the Hough
 transform permit detecting and tracking the circles (holes) correctly. Note that the circles
@@ -125,7 +128,10 @@ However, in the following sequence of two binary digital images Hough transform 
 the objects do not have a circular shape. Both the findContours method (combined with
 tracking based on distances) and the zigzag will work.
 
-INCLUIR FIGURA.
+<p align="center">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example3/example_response1.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example3/example_response2.jpg" width="150">
+</p>
 
 
 It is also worth noting that the shape of the objects (not just their positions) can usually
@@ -136,7 +142,11 @@ done (or it is performed but not properly) and/or the objects change more than e
 then zigzag will detect them as different objects (as desired), but the classical method could
 match them incorrectly.
 
-INCLUIR FIGURA
+<p align="center">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example1/example_response1.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example1/example_response2.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example1/example_response3.jpg" width="150">
+</p>
 
 In the previous sequence binary digital images the circles change their shape
 in each frame. Hough transform will not work properly since one of the objects does not
@@ -147,7 +157,9 @@ closest one with a similar area (i.e., the left circle appearing in the first fr
 the square in the second frame). The zigzag method will detect 3 holes correctly, one living
 during three frames.
 
-INCLUIR FIGURA.
+<p align="center">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example1/example_response1_barcode.jpg">
+</p>
 
 Of course, for cases like this or other similar variants, the classical method will work if
 a more sophisticated filtering is used, for instance based on SIFT/SURF features or similar
