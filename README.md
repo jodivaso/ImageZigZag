@@ -162,7 +162,7 @@ during three frames.
 </p>
 
 Of course, for cases like this or other similar variants, the classical method will work if
-a more sophisticated filtering is used, for instance based on SIFT/SURF features or similar
+a more sophisticated filtering is used, for instance based on SIFT/SURF features or other
 techniques depending on the objects to detect.
 
 The advantage is that the zigzag does the tracking of connected components and holes for free, 
