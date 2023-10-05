@@ -1,6 +1,6 @@
 from tkinter import ttk, filedialog
 import tkinter
-from PIL import ImageTk, Image, ImageDraw
+from PIL import ImageTk, Image
 from TreeviewFrame import TreeviewFrame
 import os
 import Tooltip as Tooltip
