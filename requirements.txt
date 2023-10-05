@@ -1,5 +1,0 @@
-numpy
-dionysus
-opencv-python
-Pillow
-matplotlib
