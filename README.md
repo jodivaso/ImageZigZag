@@ -4,27 +4,22 @@ This open-source code allows one to compute zigzag persistence from a sequence o
 
 ## Requirements
 
-The sofware needs the packages ```opencv```, ```dionysus```, ```numpy```, ```Pillow``` and ```matplotlib```.
+The sofware needs the packages ```opencv-python```, ```dionysus```, ```numpy```, ```natsort```, ```Pillow``` and ```matplotlib```.
+To run the experiments and compare the results, ````pandas`` is also required.
 
-The program has been tested on Linux (Ubuntu 22.04). Note that is difficult to build/install Dionysus on Windows.
-
+The program has been tested on Linux (Ubuntu 22.04 and Ubuntu 20.04). Note that is difficult to build/install Dionysus on Windows.
 
 ## Installation and Execution from sources
 
-Python and ```pip``` must be installed previously.
+The following instructions install the software using Anaconda. 
+They have been tested on fresh installations of Ubuntu 22.04 and Ubuntu 20.04 in two different computers.
 
-The following commands clone the repository, install the requirements and execute the GUI.
+First of all, install Anaconda following the instructions in the official website (https://docs.anaconda.com/free/anaconda/install/linux/).
 
-```
-git clone https://github.com/jodivaso/ImageZigZagPersistence.git
-cd ImageZigZagPersistence
-pip install -r requirements.txt
-python3 main.py
-```
-
-The following commands install everything in a fresh conda environment and execute the GUI.
+Then, the following commands will clone the repository, create a fresh Conda environment, install the requirements and execute the GUI.
 
 ```
+sudo apt-get install git cmake build-essential libboost-all-dev
 conda create -n ZigZag python=3.10 pip
 conda activate ZigZag
 git clone https://github.com/jodivaso/ImageZigZagPersistence.git
@@ -32,6 +27,7 @@ cd ImageZigZagPersistence
 pip install -r requirements.txt
 python3 main.py
 ```
+
 
 ## Example
 
