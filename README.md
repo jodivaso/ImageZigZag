@@ -14,7 +14,7 @@ The program has been tested on Linux (Ubuntu 22.04 and Ubuntu 20.04). Note that 
 The following instructions install the software using Anaconda. 
 They have been tested on fresh installations of Ubuntu 22.04 and Ubuntu 20.04 in two different computers.
 
-First of all, install Anaconda following the instructions in the official website (https://docs.anaconda.com/free/anaconda/install/linux/).
+Anaconda is required, so if you do not have it in your system, install it following the instructions in the official website (https://docs.anaconda.com/free/anaconda/install/linux/).
 
 Then, the following commands will clone the repository, create a fresh Conda environment, install the requirements and execute the GUI.
 
@@ -27,6 +27,8 @@ cd ImageZigZagPersistence
 pip install -r requirements.txt
 python3 main.py
 ```
+
+
 
 
 ## Example
