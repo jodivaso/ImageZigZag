@@ -5,7 +5,7 @@ This open-source code allows one to compute zigzag persistence from a sequence o
 ## Requirements
 
 The sofware needs the packages ```opencv-python```, ```dionysus```, ```numpy```, ```natsort```, ```Pillow``` and ```matplotlib```.
-To run the experiments and compare the results, ````pandas`` is also required.
+To run the experiments and compare the results, ```pandas``` is also required.
 
 The program has been tested on Linux (Ubuntu 22.04 and Ubuntu 20.04). Note that is difficult to build/install Dionysus on Windows.
 
