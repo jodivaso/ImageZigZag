@@ -11,6 +11,8 @@ The program has been tested on Linux (Ubuntu 22.04 and Ubuntu 20.04). Note that 
 
 ## Installation and Execution from sources
 
+#### Option 1 (recommended): Using Anaconda.
+
 The following instructions install the software using Anaconda. 
 They have been tested on fresh installations of Ubuntu 22.04 and Ubuntu 20.04 in two different computers.
 
@@ -28,7 +30,23 @@ pip install -r requirements.txt
 python3 main.py
 ```
 
+#### Option 2: Using Python and virtualenv.
 
+The following instructions install and execute the software. They have been tested on a fresh installation of Ubuntu 22.04.
+
+```
+sudo apt-get install git cmake build-essential libboost-all-dev
+sudo apt-get install python3-tk python3-pip
+sudo apt-get install python3.10-venv
+git clone https://github.com/jodivaso/ImageZigZagPersistence.git
+python3 -m pip install --user --upgrade pip
+python3 -m pip install --user virtualenv
+python3 -m venv zigzag
+source zigzag/bin/activate
+cd ImageZigZagPersistence
+python3 -m pip install -r requirements.txt
+python3 main.py
+```
 
 
 ## Example
