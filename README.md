@@ -81,14 +81,16 @@ The folder ```Experiments``` includes:
 - A folder named ```dataset``` with 20 binary videos of different objects moving around the space to perform the experiments.
 - A csv file named ```ground_truth.txt``` which contains the real number of connected components (0-dimensonal homology) and holes (1-dimensional homology) that appears in at least 20 frames of each video.
 - A Jupyter notebook entitled ```Experiments.ipynb```, which includes the code and explanations to reproduce the experiments and get the results.
-- A folder ```dataset_output``` which contains the zigzag barcodes (in both dimensions 0 and 1) of each video and a also CSV file ```results.csv``` that contains information about:
-    - The required time to build the reduced simplicial complex with our method for each video
-    - The required time to compute the zigzag persistence with our reduced simplicial complexes for each video
-    - The required time to compute the cubical complexes for each video
-    - The required time to compute the zigzag persistence using cubical complexes for each video
-    - The required time to compute the Vietoris-Rips complexes for each video
-    - Size of the different reduced simplicial complexes, cubical complexes and Vietoris-Rips
-    - Connected components and holes tracked by the method
+- A folder ```dataset_output``` which contains:
+    - The zigzag barcodes (in both dimensions 0 and 1) of each video
+    - A CSV file ```results.csv``` that contains information about:
+        - The required time to build the reduced simplicial complex with our method for each video
+        - The required time to compute the zigzag persistence with our reduced simplicial complexes for each video
+        - The required time to compute the cubical complexes for each video
+        - The required time to compute the zigzag persistence using cubical complexes for each video
+        - The required time to compute the Vietoris-Rips complexes for each video
+        - Size of the different reduced simplicial complexes, cubical complexes and Vietoris-Rips
+        - Connected components and holes tracked by the method
 
 
 
