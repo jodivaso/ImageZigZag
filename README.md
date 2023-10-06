@@ -69,7 +69,7 @@ We can compute the zigzag barcode of the video, to track the 1-dimensional holes
 are detected (except for the ones in the borders, since they are not complete circles). The following (default) parameters are used:
 - ```interval-length``` is set to half of the number of frames (to detect circles that live at least in half of the video)
 - ```generator-min-length``` is set to 1 (but any value will work), i.e., we do not need to remove minor holes (there are barely overlaps)
-- ```interval-length``` is set to 0, so we do not need to limit the size (we are interested in all holes)
+- ```generator-max-length``` is set to 0, so we do not need to limit the size (we are interested in all holes)
 
 Note that 1-dimensional homology is necessary (the number of connected components is not the same as the number of holes).
 
