@@ -137,7 +137,7 @@ class App:
         information_label = ttk.Labelframe(options, text="Information")
         information_label.grid(row=4, column=0, sticky="wes", padx=10, pady=10)
         information= ttk.Label(information_label, textvariable=self.info_string)
-        information.grid(padx=10, pady=10, ipady=100)
+        information.grid(padx=10, pady=10, ipady=10)
 
 
         ############
@@ -236,22 +236,24 @@ class App:
                 self.tab0 = ttk.Frame(self.content)
                 self.tabControl.add(self.tab0, text='n = 0')
                 image0 = Image.open(".aux_zigzag0.jpg")
+                image0 = image0.resize((512, 384), Image.LANCZOS)
                 image0 = ImageTk.PhotoImage(image0)
 
                 tab_label0 = ttk.Label(self.tab0, image=image0)
                 tab_label0.image = image0
-                tab_label0.grid(column=0, row=0, padx=30, pady=30)
+                tab_label0.grid(column=0, row=0, padx=5, pady=5)
             if 1 in self.dimensions:
                 self.tab1 = ttk.Frame(self.content)
                 self.tabControl.add(self.tab1, text='n = 1')
                 image1 = Image.open(".aux_zigzag1.jpg")
+                image1 = image1.resize((512, 384), Image.LANCZOS)
                 image1 = ImageTk.PhotoImage(image1)
 
                 tab_label1 = ttk.Label(self.tab1, image=image1)
                 tab_label1.image = image1
-                tab_label1.grid(column=0, row=0, padx=30, pady=30)
+                tab_label1.grid(column=0, row=0, padx=5, pady=5)
 
-            self.tabControl.grid(row=1, column=0, sticky="nsew", padx=10, pady=10)
+            self.tabControl.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
         final_time = time.time() - init_time
         print("Elapsed time:", final_time)
 
