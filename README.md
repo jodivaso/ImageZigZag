@@ -2,7 +2,7 @@
 
 This open-source code allows one to compute zigzag persistence from a sequence of images (or a white and black video). The program outputs the corresponding barcodes for dimensions 0 and 1. This repository contains a Jupyter notebook and also a GUI.
 
-![](https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_video.gif)
+![](https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/video_readme.gif)
 
 ## Requirements
 
