@@ -24,8 +24,8 @@ Then, the following commands will clone the repository, create a fresh Conda env
 sudo apt-get install git cmake build-essential libboost-all-dev
 conda create -n ZigZag python=3.10 pip
 conda activate ZigZag
-git clone https://github.com/jodivaso/ImageZigZagPersistence.git
-cd ImageZigZagPersistence
+git clone https://github.com/jodivaso/ImageZigZag.git
+cd ImageZigZag
 pip install -r requirements.txt
 python3 main.py
 ```
@@ -38,12 +38,12 @@ The following instructions install and execute the software. They have been test
 sudo apt-get install git cmake build-essential libboost-all-dev
 sudo apt-get install python3-tk python3-pip
 sudo apt-get install python3.10-venv
-git clone https://github.com/jodivaso/ImageZigZagPersistence.git
+git clone https://github.com/jodivaso/ImageZigZag.git
 python3 -m pip install --user --upgrade pip
 python3 -m pip install --user virtualenv
 python3 -m venv zigzag
 source zigzag/bin/activate
-cd ImageZigZagPersistence
+cd ImageZigZag
 python3 -m pip install -r requirements.txt
 python3 main.py
 ```
@@ -54,9 +54,9 @@ python3 main.py
 The following images are part of the repository (examples folder):
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/3circles-3.jpg" width="150">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/3circles-2.jpg" width="150">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/3circles-1.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/3circles-3.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/3circles-2.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/3circles-1.jpg" width="150">
 </p>
 
 
@@ -70,7 +70,7 @@ image. We can obtain this information by computing the zigzag
 barcode:
 
 <p>
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/3circles-barcode.png">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/3circles-barcode.png">
 
 </p>
 
@@ -79,7 +79,7 @@ barcode:
 
 The following image is a processed frame of one of the sample videos provided by the CASABee software:
 
-![](https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/frame_video_CASABee.jpg)
+![](https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/frame_video_CASABee.jpg)
 
 We can compute the zigzag barcode of the video, to track the 1-dimensional holes. All circles (which correspond to motile spermatozoa) 
 are detected (except for the ones in the borders, since they are not complete circles). The following (default) parameters are used:
@@ -89,7 +89,7 @@ are detected (except for the ones in the borders, since they are not complete ci
 
 Note that 1-dimensional homology is necessary (the number of connected components is not the same as the number of holes).
 
-![](https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/result_video_CASABee.jpg)
+![](https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/result_video_CASABee.jpg)
 
 
 
@@ -134,8 +134,8 @@ distances is enough, but for other types of videos (for example, those of object
 shapes in the repository) the Hough transform does not fit. See, for example, the following figure:
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example2/example_response1.jpg" width="150">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example2/example_response2.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/examples_comparison/example2/example_response1.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/examples_comparison/example2/example_response2.jpg" width="150">
 </p>
 
 This figure is a sequence of two binary digital images. Both the zigzag method and the Hough
@@ -147,8 +147,8 @@ the objects do not have a circular shape. Both the ```findContours``` method (co
 tracking based on distances) and the zigzag will work.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example3/example_response1.jpg" width="150">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example3/example_response2.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/examples_comparison/example3/example_response1.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/examples_comparison/example3/example_response2.jpg" width="150">
 </p>
 
 
@@ -161,9 +161,9 @@ then zigzag will detect them as different objects (as desired), but the classica
 match them incorrectly.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example1/example_response1.jpg" width="150">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example1/example_response2.jpg" width="150">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example1/example_response3.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/examples_comparison/example1/example_response1.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/examples_comparison/example1/example_response2.jpg" width="150">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/examples_comparison/example1/example_response3.jpg" width="150">
 </p>
 
 In the previous sequence binary digital images the circles change their shape
@@ -176,7 +176,7 @@ the square in the second frame). The zigzag method will detect 3 holes correctly
 during three frames.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZagPersistence/master/readme_imgs/examples_comparison/example1/example_response1_barcode.jpg">
+<img src="https://raw.githubusercontent.com/jodivaso/ImageZigZag/master/readme_imgs/examples_comparison/example1/example_response1_barcode.jpg">
 </p>
 
 Of course, for cases like this or other similar variants, the classical method will work if
