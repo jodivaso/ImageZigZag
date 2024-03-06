@@ -222,7 +222,7 @@ Note that the third baseline method performs the tracking via centroid distance,
 |:---------------------:|:------------------:|:-------------------:|:------------------:|:-------------------------:|:--------------------------:|:-------------------------:|
 | **Baseline method 1** |        65.69       |        74.31        |        76.47       |        67.64 (KCF)        |            92.15           | 99.01 (CSRT, Boosting, MIL) |
 | **Baseline method 2** |        74.51       |        75.98        |        76.47       |        95.09 (KCF)        |            98.03           | 99.01 (CSRT, Boosting, MIL) |
-| **Baseline method 3** |          -         |          -          |        77.45       |             -             |              -             |           99.51           |
+| **Baseline method 3** |          -         |          -          |        77.45       |             -             |              -             |           96.56           |
 
 Table 2: Results of computing H1 using Hough and findContours as detectors for the three baseline methods. The numbers represents the percentage of holes (100*detected/ground_truth) detected by the algorithms 
 For baseline methods 1 and 2, we provide the min, mean and max values of the six tracking algorithms that have been tested in each case. Parentheses indicate the name of the tracking algorithm that achieved the min and max score.
