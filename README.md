@@ -187,3 +187,43 @@ techniques depending on the objects to detect.
 
 The advantage is that the zigzag does the tracking of connected components and holes for free, 
 but the main drawback is the running time: the new method is not competitive with classical techniques.
+
+## Quantitative evaluation comparison
+
+The previous experiments (file ```Experiments/Comparison.ipynb```) showed that the zigzag approach is able to detect about 96% of connected components and about 99% of holes of the input dataset.
+To have further quantitative evaluation, we have performed comparisons using the following baseline approaches:
+
+1) Baseline approach 1: Use of a detector and then tracking using OpenCV algorithms by means of the MultiTracker class.
+2) Baseline approach 2: Use of a detector and then tracking using OpenCV algorithms without using the MultiTracker class.
+3) Baseline approach 3: Use of a detector and tracking based on centroids distance.
+
+OpenCV includes several tracking algorithms, such as CSRT, KCF, Boosting, MIL, MedianFlow and Mosse. Latest OpenCV is also compatible with other tracking algorithms, such as Nano and Vit, but this requires to download external models that are not included in OpenCV. We did not try such tracking algorithms.
+The tracking algorithms must be initialized with the bounding box for the targets, i.e., we need a detector to find the bounding boxes in the first frame of the objects to be tracked. To do this, we employed two options: the Hough transform and the findContours method (also tuned to detect the inner contours to find the holes).
+
+For the baseline approaches 1 and 2, we evaluate all combinations of detectors with each tracking algorithm, i.e., each video of the dataset is evaluated 18 times (3 detectors and 6 tracking algorithms). The third approach is also repeated using both the Hough transform and the findContours method (in this case, the tracking is performed with the classical centroids distance approach). In all three experiments, we consider an object to be correctly tracked if it has been detected in at least 20 consecutive frames (as in the zigzag experiments). 
+
+The folder ```Experiments/output_comparison``` also contains the images of the tracking process for combination of baseline method, video, detector and tracking algorithm. The file ```Experiments/Comparison.ipynb``` allows one to replicate the whole comparison.
+
+
+
+|       **Method**      | **findContours - Min H0** | **findContours - Mean H0** |     **findContours - Max H0**    |
+|:---------------------:|:-------------------------:|:--------------------------:|:--------------------------------:|
+| **Baseline method 1** |        93.19 (KCF)        |            97.28           |    98.95 (CSRT, Boosting, MIL)   |
+| **Baseline method 2** |     93.72 (MedianFlow)    |            97.80           | 98.95 (CSRT, Boosting, KCF, Mil) |
+| **Baseline method 3** |             -             |              -             |              0.9634              |
+
+Table 1: Results of computing H0 using findContours and the three baseline methods. The numbers represents the percentage of connected components (100*detected/ground_truth) detected by the algorithms 
+For baseline methods 1 and 2, we provide the min, mean and max values of the six tracking algorithms that have been tested in each case. Parentheses indicate the name of the tracking algorithm that achieved the min and max score.
+Note that the third baseline method performs the tracking via centroid distance, thus no tracking algorithms are employed.
+
+
+
+|       **Method**      | **Hough - Min H1** | **Hough - Mean H1** | **Hough - Max H1** | **findContours - Min H1** | **findContours - Mean H1** | **findContours - Max H1** |
+|:---------------------:|:------------------:|:-------------------:|:------------------:|:-------------------------:|:--------------------------:|:-------------------------:|
+| **Baseline method 1** |        65.69       |        74.31        |        76.47       |        67.64 (KCF)        |            92.15           | 99.01 (CSRT, Boosting, MIL) |
+| **Baseline method 2** |        74.51       |        75.98        |        76.47       |        95.09 (KCF)        |            98.03           | 99.01 (CSRT, Boosting, MIL) |
+| **Baseline method 3** |          -         |          -          |        77.45       |             -             |              -             |           99.51           |
+
+Table 2: Results of computing H1 using Hough and findContours as detectors for the three baseline methods. The numbers represents the percentage of holes (100*detected/ground_truth) detected by the algorithms 
+For baseline methods 1 and 2, we provide the min, mean and max values of the six tracking algorithms that have been tested in each case. Parentheses indicate the name of the tracking algorithm that achieved the min and max score.
+Note that the third baseline method performs the tracking via centroid distance, thus no tracking algorithms are employed.
