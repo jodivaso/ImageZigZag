@@ -77,6 +77,8 @@ barcode:
 </p>
 
 
+## Description of the software
+
 ## CASABee example
 
 The following image is a processed frame of one of the sample videos provided by the CASABee software:
@@ -227,3 +229,9 @@ Note that the third baseline method performs the tracking via centroid distance,
 Table 2: Results of computing H1 using Hough and findContours as detectors for the three baseline methods. The numbers represents the percentage of holes (100*detected/ground_truth) detected by the algorithms 
 For baseline methods 1 and 2, we provide the min, mean and max values of the six tracking algorithms that have been tested in each case. Parentheses indicate the name of the tracking algorithm that achieved the min and max score.
 Note that the third baseline method performs the tracking via centroid distance, thus no tracking algorithms are employed.
+
+## A note on the computation time
+
+Although the zigzag computation works for image and video processing, it is, as expected, much slower than any classical method. Indeed, it is well-known that current persistence-based algorithms applied to image processing are not competitive to non-persistence modern approaches. Indeed, computing usual persistent homology for datasets arising in real-world applications only became feasible in recent years due to optimizations that exploit various structural properties and algebraic identities of the problem (see this paper: ![Efficient Computation of Image Persistence](https://arxiv.org/abs/2201.04170)). Thus, researchers and software developers of the main persistence software (Gudhi, Dionysus, Perseus, Ripser,...) are making great efforts to improve performance. 
+
+To the best of our knowledge, this is the first library that allows one to analyze images and videos applying zigzag persistence, also offering a simple graphical interface. We hope this is a first step to extend the use of zigzag homology in image processing and we hope to incorporate the improvements that the community will surely achieve for zigzag computation (which is the current bottleneck).
