@@ -79,6 +79,24 @@ barcode:
 
 ## Description of the software
 
+This software implements the algorithms described in the paper *Zigzag persistence for image processing: new software and applications*.
+The involved algorithms Algorithms have been implemented as Python functions using OpenCV and Numpy to read the images, 
+the library [Dionysus 2](https://mrzv.org/software/dionysus2/) for computing the zigzag modules and Matplotlib to draw the barcode.
+
+First of all, we have implemented an algorithm to build a simplicial complex where the number of vertices,
+edges and triangles in the complex is smaller than in the triangulation
+of the cubical complex of a binary image and in the
+Vietoris–Rips complex. This is done in a function called ```binaryImageToSimplicialComplex```. We consider a binary image *I* with {nrows} rows and \texttt{ncols} cols. For each white pixel at position *(i,j)*, the corresponding vertex in the simplicial complex is given by the formula *i x numCols + j*. 
+
+As a second step, we have defined a function called ```imageListToZigzagFiltration``` that, from a list of binary images of the same size, constructs a simplicial complex and a zigzag filtration like the one required by the Dionysus 2 software. To use Dionysus 2, for each simplex in the complex we must specify a list of times when it enters and leaves the filtration. This information must be provided as a list of lists, ```times```. For the *i*-th simplex in the filtration, ```times[i]``` is a list of times, where values in even positions (counting from 0) specify when the simplex is added to the complex and odd positions when it is removed. 
+
+Once the zigzag filtration has been constructed, we use the Dionysus 2 function called ```zigzag\_homology\_persistence``` to determine the zigzag barcode associated to the filtration. Since the Dionysus software only provides the generators of the cycles that are still alive in the right-most homology group in the sequence, we have modified the internal behavior of this function in order to obtain the generators of all bars. To this aim, a global variable named ```all_generators_list``` is defined, and the Dionysus function ```detail``` (an optional callback argument, which gets called back after every step of the zigzag) is modified by adding the cycles to the list at each step.  Finally, if the optional parameters ```interval-length```, ```generator-min-length```, and ```generator-max-length``` are introduced, we select the bars that satisfy the desired conditions and draw them using our new function ```plot_zigzag_bars```.
+
+These algorithms are also implemented in a Jupyter notebook, available also in this repository.
+
+To allow users to apply our programs in an easier way, we have also developed a graphical interface (the image above). The new software inputs a set of binary images and it allows the user to decide the order of the images (to compute the zigzag persistence).  
+The user can choose the dimensions for which the barcode will be determined (0 or/and 1), the minimum length of a bar to be showed and the minimum and maximum number of simplices (vertices or edges) in a generator that are needed to be showed in the barcode. It is also possible to decide whether the interval generators are shown in the barcode. The result is a graphical representation of the barcode diagrams shown within the application.
+ 
 ## CASABee example
 
 The following image is a processed frame of one of the sample videos provided by the CASABee software:
